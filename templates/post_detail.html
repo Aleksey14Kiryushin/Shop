@@ -9,10 +9,11 @@
     <div class="row g-2 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="alert alert-info col p-4 d-flex flex-column position-static">
             <p><b>{{ notice.name_visiable }}</b></p>
-            <p><b>{{ notice.url }}</b></p>
             <p>{{ notice.intro }}</p>
             <p>{{ notice.text }}</p>
+            <p><b>{{ notice.price }}</b></p>
 
+            <a target="_blank"  href="{{ notice.url }}" class="link-dark"><b>Contact for discussion</b></a>
             <p><b>Date: {{ notice.date.date() }}</b></p>
         </div>
         <div class="alert alert-info col-auto d-none d-lg-block">
@@ -20,4 +21,6 @@
         </div>
     </div>
 </div>
+<script src="{{ url_for('static', filename='scripts/pattern.js') }}"></script>
+
 {% endblock %}

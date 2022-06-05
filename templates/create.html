@@ -9,13 +9,39 @@
 
         <input type="text" name="name" id="name" class="form-control" placeholder="Укажите имя, которое увидят пользователи"><br>
         <input type="text" name="title" id="title" class="form-control" placeholder="Введите заголовок"><br>
-        <input type="text" name="url" id="url" class="form-control" placeholder="Добавьте ссылку на Telegram, чтобы вы могли взаимодействовать с покупателем"><br>
+        <input type="url" name="url" id="url" class="form-control" placeholder="Добавьте ссылку на Telegram, чтобы вы могли взаимодействовать с покупателем"><br>
+        <input type="text" name="price" id="price" class="form-control" placeholder="Введите цену"><br>
         <textarea type="text" name="intro" id="intro" class="form-control" placeholder="Назовите категорию(-ии) товара"></textarea><br>
         <textarea type="text" name="text" id="text" class="form-control" placeholder="Подробно расскажите о выбранном товаре"></textarea><br>
-        <input type="submit" class="btn btn-success" value="Send">
+        <input type="submit" class="btn btn-success" value="PUBLIC">
+        
         <!-- <div class="col-auto d-none d-lg-block">
             <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Picture</text></svg>
         </div> -->
+
+        <div class="wrapper">
+            <h1>Loading</h1>
+            <div class="avatar__wrapper">
+                <label>
+                    <input type="file">
+                </label>
+            </div>
+       
+            <div class="img__wrapper">
+                <!-- <img src="" alt=""> -->
+            </div>
+        
+        <div class="download__button">
+        <label>
+            <!-- файл отправляется в core.js -->
+        <input type="file" onchange="donwload(this)"> 
+        <span class='line1'></span>
+        <span class='line2'></span>
+        </label>
+        </div>
+        </div>
+
+        <script src='scripts/core.js'></script>
     </form>
 </div>
 {% endblock %}

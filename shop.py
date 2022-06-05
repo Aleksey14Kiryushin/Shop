@@ -1,9 +1,25 @@
-# Не создается База Данных
-# Создавать избранные посты
-# Добработать профиль
-# Создать страницу регистрации, проверить как после этого работает base.html
-# В регистрации сделать условие, чтобы нельля было осталять пустыми поля 
-# Добавить условие, когда нет записей
+#  - Не создается База Данных
+#  - Создавать избранные посты
+#  + Добработать профиль
+#  + Создать страницу регистрации, проверить как после этого работает base.html
+#  - В регистрации сделать условие, чтобы нельля было осталять пустыми поля 
+#  + Добавить условие, когда нет записей
+#  + добавить строку для указания цены
+
+
+#  + Создавать именно ССЫЛКИ
+#  + найти информацию о скачивании изображений
+
+#  - Расположить обьекты сверху скрипта, возможно стоит распологать script только в base
+# + разобраться, почему testing не работает, когда находится в папке
+
+#  - отправлять посты из js на flask, потом ТОЛЬКО 3 поста добавлять к записи
+
+# https://habr.com/ru/post/485404/
+
+# input:invalid:required {
+#   background-image: linear-gradient(to right, pink, lightgreen);
+# }
 
 from flask import Flask, redirect, render_template, url_for, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
@@ -26,10 +42,13 @@ class ShopArticle(DB.Model):
     text = DB.Column(DB.Text, nullable=False)
     date = DB.Column(DB.DateTime, default=datetime.utcnow)
 
+    price = DB.Column(DB.String(100), nullable=False)
+
     url = DB.Column(DB.Text, nullable=False)
     name_visiable = DB.Column(DB.Text, nullable=False)
     name_invisiable = DB.Column(DB.Text, nullable=False)
 
+    # image = DB.Column(DB.Text, nullable=False)
 
     def __repr__(self):
         return '<Article %r>' % self.id
@@ -71,10 +90,13 @@ def profile(id_shoper):
 
     shoper = Shoper.query.get(id_shoper)
     shoper_name = shoper.name
+    print("SHOPER_NAME", shoper.name)
 
     for notice in notices:
         if notice.name_invisiable == shoper_name:
             shoper_list.append(notice)
+
+    print("LENGTH", len(notices))
 
     return render_template("profile.html", notices=shoper_list, id_shoper=id_shoper, shoper_name=shoper_name)
 
@@ -98,32 +120,103 @@ def logIn():
     else:
         return render_template("log_in.html")
 
-@app.route("/create-notice/<int:id_shoper>", methods=["POST", "GET"])
-def createNotice(id_shoper):
+@app.route("/posts/<int:id>/delete/<int:id_shoper>")
+def delete_post(id, id_shoper):
+    post = ShopArticle.query.get_or_404(id)
+
+    try:
+        DB.session.delete(post)
+        DB.session.commit()
+        print("ID_DELETED", id)
+        return redirect(f'/{id_shoper}')
+
+    except Exception as _ex:
+        return str(_ex)
+
+@app.route("/posts/<int:id>/edit/<int:id_shoper>", methods=["POST", "GET"])
+def edit_post(id, id_shoper):
+    post = ShopArticle.query.get_or_404(id)
+
     if request.method == "POST":
         shoper = Shoper.query.get(id_shoper)
         print("SHOPER_NAME", shoper.name)
-        shoper_name = shoper.name
+        post.name_invisiable = shoper.name
 
-        name = request.form['name']
-        title = request.form['title']
-        url = request.form['url']
-        intro = request.form['intro']
-        text = request.form['text']
+        post.name_visiable = request.form['name']
+        post.title = request.form['title']
+        post.url = request.form['url']
+        post.intro = request.form['intro']
+        post.text = request.form['text']
+        post.price = request.form['price']
+        
 
-        notice = ShopArticle(title=title, intro=intro, text=text, 
-                                name_invisiable=shoper_name, 
-                                name_visiable=name, url=url)
         try:
-            DB.session.add(notice)
-            print(notice.id)
+            print(post.id)
             DB.session.commit()
             return redirect(f'/{id_shoper}')
 
         except Exception as _Ex:
             return str(_Ex)
+    
     else:
-        return render_template("create.html", id_shoper=id_shoper)
+        return render_template("edit_post.html", id_shoper=id_shoper, post=post)
+
+
+
+@app.route("/create-notice/<int:id_shoper>", methods=["POST", "GET"])
+def createNotice(id_shoper):
+    name = ''
+    title = ''
+    url = ''
+    intro = ''
+    text = ''
+    price = ''
+
+    if request.method == "POST":
+        returning = url_for('static', filename = 'check_form.js')
+        print("retuning", request.form)
+        returning = True
+        print(request.form)
+        name = request.form['name']
+        title = request.form['title']
+        url = request.form['url']
+        intro = request.form['intro']
+        text = request.form['text']
+        price = request.form['price']
+
+        list_form = (name, title, url, intro, text, price)
+        for i in range(len(list_form)):
+            if list_form[i] == '':
+                returning = False
+        
+        print("retuning", returning)     
+        if returning: #request.form["onsubmit"]
+            shoper = Shoper.query.get(id_shoper)
+            print("SHOPER_NAME", shoper.name)
+            shoper_name = shoper.name
+
+            # image = None
+
+            # try:
+            #     image = request.form['img_1']
+            #     print("IMG", image)
+            # except:
+            #     print("Файлов не найдено!")
+
+            notice = ShopArticle(title=title, intro=intro, text=text, 
+                                    name_invisiable=shoper_name, 
+                                    name_visiable=name, url=url,
+                                    price=price) #image=image
+            try:
+                DB.session.add(notice)
+                print(notice.id)
+                DB.session.commit()
+                return redirect(f'/{id_shoper}')
+
+            except Exception as _Ex:
+                return str(_Ex)
+        
+    return render_template("testing.html", id_shoper=id_shoper, name=name, title=title, url=url, price=price, intro=intro, text=text)
 
 if __name__ == "__main__":
     app.run(debug=True)

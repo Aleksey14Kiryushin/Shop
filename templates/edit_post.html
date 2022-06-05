@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} Edit Page {% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Edit Post</h1>
+    <form method="post">
+
+        <input type="text" name="name" id="name" class="form-control" placeholder="Укажите имя, которое увидят пользователи" value="{{ post.name_visiable }}"><br>
+        <input type="text" name="title" id="title" class="form-control" placeholder="Введите заголовок" value="{{ post.title }}"><br>
+        <input type="url" name="url" id="url" class="form-control" placeholder="Добавьте ссылку на Telegram, чтобы вы могли взаимодействовать с покупателем" value="{{ post.url }}"><br>
+        <input type="text" name="price" id="price" class="form-control" placeholder="Введите цену" value="{{ post.price }}"><br>
+        <textarea type="text" name="intro" id="intro" class="form-control" placeholder="Назовите категорию(-ии) товара">{{ post.intro }}</textarea><br>
+        <textarea type="text" name="text" id="text" class="form-control" placeholder="Подробно расскажите о выбранном товаре">{{ post.text }}</textarea><br>
+        <input type="submit" class="btn btn-success" value="PUBLIC">
+        <div class="col-auto d-none d-lg-block">
+            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Picture</text></svg>
+        </div>
+    </form>
+</div>
+<script src="{{ url_for('static', filename='scripts/pattern.js') }}"></script>
+
+{% endblock %}
