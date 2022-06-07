@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/input_file.css') }}">
 
   </head>
-<body style="margin: 0; ">
+<body style="margin: 0;">
   <!-- <canvas> -->
     <canvas id="canvas"></canvas>
     <div class="all">
@@ -18,14 +18,14 @@
         <div class="container d-flex flex-wrap">
           <ul class="nav me-auto">
             <li class="nav-item"><a href="/{{ id_shoper }}" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="/create-notice/{{ id_shoper }}" class="nav-link link-dark px-2">Create</a></li>
+            <li class="nav-item"><a href="/create-notice/{{ id_shoper }}/0" class="nav-link link-dark px-2">Create</a></li>
             <li class="nav-item"><a href="/posts/{{ id_shoper }}" class="nav-link link-dark px-2">Posts</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">FAQs</a></li>
+            <li class="nav-item"><a href="/liked/{{ id_shoper }}" class="nav-link link-dark px-2">Favourite</a></li>
             <li class="nav-item"><a href="/about/{{ id_shoper }}" class="nav-link link-dark px-2">About</a></li>
           </ul>
           <ul class="nav">
             <li class="nav-item"><a href="/profile/{{ id_shoper }}" class="nav-link link-dark px-2">Profile</a></li>
-            <li class="nav-item"><a href="/log_in" class="nav-link link-dark px-2">Sign up</a></li>
+            <li class="nav-item"><a href="/log_in/0" class="nav-link link-dark px-2">Sign up</a></li>
           </ul>
         </div>
     </nav>

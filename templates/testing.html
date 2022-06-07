@@ -37,32 +37,34 @@
             <input value='{{ title }}' type="text" name="title" id="title" class="form-control" placeholder="Введите заголовок"><br>
             <input value='{{ url }}' type="url" name="url" id="url" class="form-control" placeholder="Добавьте ссылку на Telegram, чтобы вы могли взаимодействовать с покупателем"><br>
             <input value='{{ price }}' type="text" name="price" id="price" class="form-control" placeholder="Введите цену"><br>
-            <textarea value='{{ intro }}' typnamee="text" name="intro" id="intro" class="form-control" placeholder="Назовите категорию(-ии) товара"></textarea><br>
-            <textarea value='{{ text }}' type="text" name="text" id="text" class="form-control" placeholder="Подробно расскажите о выбранном товаре"></textarea><br>        
+            <textarea type="text" name="intro" id="intro" class="form-control" placeholder="Назовите категорию(-ии) товара">{{ intro }}</textarea><br>
+            <textarea  type="text" name="text" id="text" class="form-control" placeholder="Подробно расскажите о выбранном товаре">{{ text }}</textarea><br>        
             <hr>
-            <input type="submit" class="btn btn-public btn-success" value="PUBLIC" onclick="check();"><br>
-
-    <div class="wrapper">
-        <hr>
-        <div class="avatar__wrapper">
-            <label>
-                <input type="file">
-            </label>
-        </div>
-
-        <div class="img__wrapper" id="img_1" name="img_1">
-            <!-- <img src="" alt="picture"> -->
-            <!-- Здесь появляются изображения -->
-        </div>
-
-        <div class="download__button">
-        <label>
-            <!-- файл отправляется в core.js -->
-            <input type="file" onchange="download(this)">
+            <input type="submit" class="btn btn-public btn-success" value="NEXT >" onclick="check();"><br>
             
-        </label>
-        </div>
-    </div>
+            <!-- <div class="wrapper">
+                <hr>
+                <div class="avatar__wrapper">
+                    <label>
+                        <input type="file">
+                    </label>
+                </div>
+            <div class="load_img">
+                <form class="img__wrapper" method="post">
+                    <img src="" id="img_1" name="img_1" value="hi">
+                    
+                    Здесь появляются изображения
+                </form>
+            </div>
+
+                <div class="download__button">
+                <label>
+                    файл отправляется в core.js
+                    <input type="file" onchange="download(this)">
+                    
+                </label>
+                </div>
+            </div> -->
     </form>
 </div>
 <hr>

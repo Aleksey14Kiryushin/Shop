@@ -1,4 +1,5 @@
-let wrapper = document.querySelector('.img__wrapper');
+// нахождение формы
+let wrapper = document.querySelector('.load_img');
 
 function download(input) {
     let file = input.files[0];
@@ -8,9 +9,18 @@ function download(input) {
     console.log(file)
 
     reader.onload = function () {
+        // создание img
         let img = document.createElement('img');
         wrapper.appendChild(img);
         img.src = reader.result;      
-        // передаем в img resource url-картинки
+        img.id = "img_1"
+        alert( "Изображение успешно добавлено!\nSrc:",img.src)
+
+        // создание текста img.src
+        let input = document.createElement('input');
+        wrapper.appendChild(input);
+        input.value = reader.result;      
+        input.id = "input_img_1"
+
     }
 }
