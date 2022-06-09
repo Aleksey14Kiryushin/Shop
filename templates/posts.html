@@ -16,26 +16,42 @@
                 <p><b>Seller:</b> {{ el.name_visiable }}</p>
                 <p><b>Price:</b> {{ el.price }}₽</p>
                 <p><b>Date:</b> {{ el.date.date() }}</p>
-                <p><b>IMG:</b> upload/{{ el.image_1st }}</p>
+                <!-- <p><b>IMG:</b> upload/{{ el.image_1st }}</p> -->
                 <a href="/posts/{{ el.id }}/{{ id_shoper }}" class="btn btn-warning">More</a>
                 <hr>
             </div>
             <div class="alert alert-info post col-auto d-none d-lg-block">
-                <image src="{{ url_for('static', filename='upload/{{ el.image_1st }}') }}" alt="None" class="bd-placeholder-img image-div" width="400" height="400">
+                <!-- <p>IMG{{ 'uploads/'+el.image_1st }} </p> -->
+                {% set file_name = 'uploads/'+el.image_1st %}
+                {% if el.image_1st != '' %}    
+                    <image src="{{ url_for('static', filename = file_name ) }}" alt="None" class="bd-placeholder-img image-div" width="400" height="400">
+                {% else %}
+                    <img src="{{ url_for('static', filename ='img/pict-empty.png' ) }}" alt="None" class="bd-placeholder-img image-div" width="400" height="400">
+                {% endif %}
             </div>
         </div> 
+      
 
-        <div>
-            <input type="image" class="btn" src="{{ url_for('static', filename='img/dis_heart.png') }}" width="77" height="50" alt="LIKE" onclick="return change(this);">
-            <p>{{el.likes}}</p>   
+        <div class="row g-2 scattering overflow-hidden flex-md-row mb-4 h-md-250 position-relative">
+            <a href="javascript:void(0);" id="noscroll"></a>
+            <!-- <a href ="#"> -->
+                <!-- <b>{{ amount_like }}</b> -->
+            <!-- </a>     -->
         </div>
         <hr>
-            
+        <br>
         {% endfor %}
-
+        <!-- <button class="scroll-top sticky-btn">Go to top</button> -->
+    <a class="top-link hide" href="" id="js-top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
+    <span class="screen-reader-text">Back to top</span>
+    </a>
     {% else %}
     <p><b>We have not get any page...</b></p>
     {% endif %}
+
+<script src="{{ url_for('static', filename='scripts/for_sticky_btn.js') }}"></script>
+
 <script src="{{ url_for('static', filename='scripts/none_pattern.js') }}"></script>
 
 <script src="{{ url_for('static', filename='scripts/change.js') }}"></script>

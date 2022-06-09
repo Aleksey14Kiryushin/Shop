@@ -22,7 +22,16 @@
 }
 .items{
     border-radius: 20px;
-    box-shadow: 10px 5px 5px 5px rgba(36, 36, 40, 0.2);
+    box-shadow: 10px 5px 5px 5px rgba(36, 36, 40, 0.2);  
+}
+
+.sticky-btn{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 90%;
+  left: 45%;
+  border-radius: 20px;
+  
 }
 
 .nav-items {
@@ -42,7 +51,9 @@
 }
 
 body {
-    margin: 0%
+    margin: 0%;
+    position: relative;
+    font-family: sans-serif;
 }
 
 .canvas {
@@ -58,3 +69,221 @@ body {
     border: 2px solid #0f0;
 }
 
+.scattering {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 5%;
+    transform: translate(-50%, -50%);
+    background: url(http://zornet.ru/ABVUN/Aba/detunis/supasnab/heart.png) no-repeat;
+    cursor: pointer;
+    
+  }
+  /* при target не работает */
+  .scattering:active {
+    background-position: -2800px 0;
+    transition: background 2s steps(28);
+    /* animation: fave-heart 2s steps(28); */
+  }
+  @keyframes fave-heart {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: -2800px 0;
+    }
+  }
+
+html {
+    scroll-behavior: smooth;
+  }
+
+#flag{
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 300px;
+  border: 10px solid #e6e6e6;
+  background-color:#fef108;
+  margin: 40px;
+  overflow: hidden;
+}
+
+.wave2{
+  left: -50%;
+  top: 30%;
+  background-color: #fef108;
+}
+.wave3{
+  left: -50%;
+  top: 50%;
+  background-color: rgb(4, 0, 255); 
+}
+.wave2, .wave3{
+  position: absolute;
+  width: 200%;
+  height: 200%;    
+  border-radius: 45%;
+  animation: wave 10s linear infinite;
+}
+
+@keyframes wave {
+  100% {
+       transform: rotate(360deg);
+  }
+}
+
+#flag_another{
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 300px;
+  border: 10px solid #e6e6e6;
+  background-color:#ffffff;
+  margin: 40px;
+  overflow: hidden;
+}
+
+.wave2_another{
+  left: -50%;
+  top: 30%;
+  background-color: #2908fe;
+}
+.wave3_another{
+  left: -50%;
+  top: 65%;
+  background-color: #ff0000; 
+}
+.wave2_another, .wave3_another{
+  position: absolute;
+  width: 200%;
+  height: 200%;    
+  border-radius: 45%;
+  animation: wave 10s linear infinite;
+}
+
+.download-case {
+  border-radius: 20px;
+  box-shadow: 3px 3px 50px rgb(255, 0, 0);
+}
+
+.intro-copy {
+  padding: 1em;
+  margin: 50vh auto;
+  max-width: 15em;
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 2em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.top-link {
+  transition: all .25s ease-in-out;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: inline-flex;
+  
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin: 0 3em 3em 0;
+  border-radius: 50%;
+  padding: .25em;
+  width: 80px;
+  height: 80px;
+  background-color: #F8F8F8;
+}  
+.top-link.show {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+.top-link.hide {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  svg {
+    /* fill: #000; */
+    width: 24px;
+    height: 12px;
+  }
+
+.top-link:hover {
+    background-color: #E8E8E8;
+}
+
+
+/* // Text meant only for screen readers. */
+.screen-reader-text {
+  position: absolute;
+  clip-path: inset(50%);
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  word-wrap: normal !important;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+  .screen-reader-text:focus {
+    display: block;
+    top: 5px;
+    left: 5px;
+    z-index: 100000; 
+    clip-path: none;
+    background-color: #eee;
+    padding: 15px 23px 14px;
+    width: auto;
+    height: auto;
+    text-decoration: none;
+    line-height: normal;
+    color: #444;
+    font-size: 1em;
+    clip: auto !important;
+  }
+
+/* external css: flickity.css */
+
+/* * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+} */
+
+.gallery {
+  margin-bottom: 30px;
+  background: #EEE;
+  border-radius: 20px;
+  border: 10px solid rgb(208, 208, 208);
+}
+
+.gallery-cell {
+  margin: 30px;
+  border-radius: 20px;
+  width: 45%;
+  height: 400px;
+  margin-right: 10px;
+  margin-left: 10px;
+  /* background: rgb(175, 33, 197); */
+  counter-increment: gallery-cell;
+}
+
+/* cell number */
+.gallery-cell:before {
+  
+  display: block;
+  text-align: center;
+  /* content: counter(gallery-cell); */
+  line-height: 400px;
+  font-size: 80px;
+  color: white;
+}
+
+.wrapper-image {
+  border-radius: 20px;
+  border: 5px solid rgb(255, 255, 255);
+}

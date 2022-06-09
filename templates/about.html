@@ -4,8 +4,18 @@
 
 {% block body %}
 
-<div class="container">
-    <h1>Page About</h1>
+<div class="container row g-3 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+    <div id="flag">
+        <div class="wave2"></div>
+        <div class="wave3"></div>            
+    </div>  
+    
+    <div id="flag_another">
+        <h2>VS</h2>
+        <div class="wave2_another"></div>
+        <div class="wave3_another"></div>
+    </div> 
+    
 </div>
 
 <script src="{{ url_for('static', filename='scripts/pattern.js') }}"></script>

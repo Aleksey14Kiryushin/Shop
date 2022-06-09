@@ -69,7 +69,7 @@ class ShopArticle(DB.Model):
     name_visiable = DB.Column(DB.Text, nullable=False)
     name_invisiable = DB.Column(DB.Text, nullable=False)
 
-    likes = DB.Column(DB.Integer)
+    to_favourite = DB.Column(DB.Integer)
 
     image_1st = DB.Column(DB.Text)
     image_2nd = DB.Column(DB.Text)
@@ -80,9 +80,10 @@ class ShopArticle(DB.Model):
 
 class Shoper(DB.Model):
     id_shoper = DB.Column(DB.Integer, primary_key=True)
-    like_posts = (DB.String(100))
     name = DB.Column(DB.String(100), nullable=False)
     password = DB.Column(DB.String(100), nullable=False)
+    like_posts = DB.Column(DB.String(100), nullable=False)
+
 
     def __repr__(self):
         return '<Shoper %r>' % self.id_shoper
@@ -91,8 +92,7 @@ class Images(DB.Model):
     __tablename__ = "imgs"
     id = DB.Column(DB.Integer, primary_key=True, nullable=False)
     img = DB.Column(DB.LargeBinary)
-    
-    
+      
 
 DB.create_all()
 
@@ -185,9 +185,8 @@ def about(id_shoper):
 @app.route("/posts/<int:id>/<int:id_shoper>", methods=["POST", "GET"])
 def post_detail(id, id_shoper):
     post = ShopArticle.query.get(id)
-    amount_like = post.likes
 
-    return render_template("post_detail.html", notice=post, id_shoper=id_shoper, amount_like=amount_like, like=1)
+    return render_template("post_detail.html", notice=post, id_shoper=id_shoper)
 
 @app.route("/posts/<int:id_shoper>", methods=["POST", "GET"])
 def posts(id_shoper):
@@ -223,7 +222,8 @@ def logIn(warning_log):
         name = request.form["name"]
         password = request.form["password"]
 
-        shoper = Shoper(name=name, password=password, like_posts='')
+        shoper = Shoper(name=name, password=password, 
+                        like_posts='')
         
         try:
             DB.session.add(shoper)
@@ -351,8 +351,8 @@ def createNotice(id_shoper, warning_log):
             notice = ShopArticle(title=title, intro=intro, text=text, 
                                     name_invisiable=shoper_name, 
                                     name_visiable=name, url=url,
-                                    price=price, likes=0, image_1st='',
-                                    image_2nd='', image_3rd='') 
+                                    price=price, image_1st='',
+                                    image_2nd='', image_3rd='', to_favourite=0) 
             try:
                 DB.session.add(notice)
                 DB.session.commit()
@@ -373,41 +373,99 @@ def createNotice(id_shoper, warning_log):
         price = list_form[5]
       
     return render_template("testing.html", warning_log=warning_log, id_shoper=id_shoper, name=name, title=title, url=url, price=price, intro=intro, text=text)
-@app.route("/posts/<int:id>/<int:id_shoper>/1")
+# @app.route("/posts/<int:id>/<int:id_shoper>/1")
+# def like(id, id_shoper):
+#     post = ShopArticle.query.get(id)
+#     post.likes += 1
+
+#     try:
+#         print(post.id)
+#         DB.session.commit()
+
+#     except Exception as _Ex:
+#         return str(_Ex)
+
+#     try:
+#         shoper = Shoper.query.get(int(id_shoper))
+#         shoper.like_posts.remove(id, '')
+#         shoper.like_posts += f',{id}'
+#         DB.session.commit()
+#         print("LIKE_POSTS", shoper.like_posts)
+#     except:
+#         print("WARNING")
+
+#     amount_like = post.likes
+#     print(amount_like)
+
+#     return render_template("post_detail.html", notice=post, id_shoper=id_shoper, amount_like=amount_like)
+
+# @app.route("/post/<int:id>/<int:id_shoper>/like")
+# def like_in_posts(id, id_shoper):
+#     post = ShopArticle.query.get(id)
+
+#     try:
+#         print(post.id)
+#         DB.session.commit()
+
+#     except Exception as _Ex:
+#         return str(_Ex)
+
+#     try:
+#         shoper = Shoper.query.get(int(id_shoper))
+#         print("Shoper",shoper)
+#         print("Shoper_posts",shoper.like_posts)
+#         shoper.like_posts += f' {id}'
+#         DB.session.commit()
+#         print("LIKE_POSTS", shoper.like_posts)
+#     except:
+#         print("WARNING")
+
+#     return render_template("post_detail.html", notice=post, id_shoper=id_shoper)
+
+@app.route("/favourite/<int:id_shoper>")
+def favourites(id_shoper):
+
+    try:   
+        shoper = Shoper.query.get(id_shoper)
+        print(shoper)
+        favourite_posts = shoper.like_posts
+        print(shoper.name)
+    except:
+        return redirect('/log_in/10')
+
+    list_liked_posts = list()
+
+    # favourite_posts.split(' ')
+    print("Favourites post",str(favourite_posts))
+
+    favourite_posts = str(favourite_posts).split()
+
+    for i in range(len(favourite_posts)):
+        try:
+            print("COUNTER", i)
+            print(favourite_posts[i])     
+            post = ShopArticle.query.get(int(favourite_posts[i]))
+            print(post)
+            print(post.title)
+            list_liked_posts.append(post)
+        except:
+            print("WARNING")
+    
+    # переворачиваем список
+    list_liked_posts = list_liked_posts[::-1]
+
+    return render_template("favourite.html", notices=list_liked_posts, id_shoper=id_shoper)
+
+@app.route("/posts/<int:id>/<int:id_shoper>/favourite")
 def like(id, id_shoper):
     post = ShopArticle.query.get(id)
-    post.likes += 1
 
     try:
-        print(post.id)
+        post.to_favourite += 1
+        print("Нужно добавить в избранное POST", post.name_visiable)
         DB.session.commit()
-
-    except Exception as _Ex:
-        return str(_Ex)
-
-    try:
-        shoper = Shoper.query.get(int(id_shoper))
-        shoper.like_posts.remove(id, '')
-        shoper.like_posts += f',{id}'
-        DB.session.commit()
-        print("LIKE_POSTS", shoper.like_posts)
-    except:
-        print("WARNING")
-
-    amount_like = post.likes
-    print(amount_like)
-
-    return render_template("post_detail.html", notice=post, id_shoper=id_shoper, amount_like=amount_like, like=0)
-
-@app.route("/posts/<int:id>/<int:id_shoper>/0")
-def unlike(id, id_shoper):
-    post = ShopArticle.query.get(id)
-    post.likes -= 1
-
-    try:
-        print(post.id)
-        DB.session.commit()
-
+        print("Всего добавлено в избранное:", post.to_favourite)
+    
     except Exception as _Ex:
         return str(_Ex)
 
@@ -415,41 +473,17 @@ def unlike(id, id_shoper):
         shoper = Shoper.query.get(int(id_shoper))
         print("Shoper",shoper)
         print("Shoper_posts",shoper.like_posts)
-        shoper.like_posts += f',{id}'
-        DB.session.commit()
+        if not (str(id) in str(shoper.like_posts)):
+            shoper.like_posts += f' {id}'
+            DB.session.commit()
         print("LIKE_POSTS", shoper.like_posts)
     except:
         print("WARNING")
 
+    
+    # posts = ShopArticle.query.order_by(ShopArticle.date.desc()).all()
 
-    amount_like = post.likes
-    print(amount_like)
-
-    return render_template("post_detail.html", notice=post, id_shoper=id_shoper, amount_like=amount_like, like=1)
-
-@app.route("/liked/<int:id_shoper>")
-def favourite(id_shoper):
-    try:
-        shoper = Shoper.query.get(id_shoper)
-        favourite = shoper.like_posts
-    except:
-        return redirect('/log_in/10')
-
-    print("LIKE_POSTS", shoper.like_posts)
-
-    for i in range(len(favourite.split(','))):
-        try:
-            print("COUNTER", i)
-            post = ShopArticle.query.get(int(i))
-            print(post)
-        except:
-            print("WARNING")
-
-    amount_like = post.likes
-    print(amount_like)
-
-    return render_template("post_detail.html", notice=post, id_shoper=id_shoper, amount_like=amount_like, like=1)
-
+    return render_template("post_detail.html", notice=post, id_shoper=id_shoper)
 
 if __name__ == "__main__":
     app.run(debug=True)

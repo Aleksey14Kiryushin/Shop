@@ -3,6 +3,8 @@
 {% block title %} {{ notice.title }} {% endblock %}
 
 {% block body %}
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
 <div class="container">
     <hr>
@@ -18,18 +20,117 @@
             <a target="_blank"  href="{{ notice.url }}" class="link-dark"><b>Contact for discussion</b></a><br>
             <p><b>Date: </b>{{ notice.date.date() }}</p>
         </div>
-        <div class="alert alert-info post col-auto d-none d-lg-block">
-            <svg class="bd-placeholder-img image-div" width="400" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Picture</text></svg>
-        </div>
-    </div>
-    <div>
-        <a href="/posts/{{ notice.id }}/{{ id_shoper }}/{{ like }}">
-            <input type="image" class="btn" src="{{ url_for('static', filename='img/dis_heart.png') }}" width="77" height="50" alt="LIKE" onclick="return change(this);" >
-            <b>{{ amount_like }}</b>
-        </a>
+
+        
+    <div class="gallery js-flickity"
+        data-flickity-options='{ "wrapAround": true }'>
+        {% if notice.image_1st != '' %}
+            {% set file_name = 'uploads/'+notice.image_1st %}
+            <div class="gallery-cell">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" width="550px" height="400px">
+            </div>
+
+        {% else %}
+            <div class="gallery-cell">
+                <img src="{{ url_for('static', filename ='img/pict-empty.png' ) }}" alt="None" class="bd-placeholder-img image-div" width="550px" height="400px">
+            </div>
+        {% endif %}
+
+        {% if notice.image_2nd != '' %}
+            {% set file_name = 'uploads/'+notice.image_2nd %}
+            <div class="gallery-cell">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" width="550px" height="400px">
+            </div>
+        {% endif %}
+
+        {% if notice.image_3rd != '' %}
+            {% set file_name = 'uploads/'+notice.image_3rd %}
+            <div class="gallery-cell">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" width="550px" height="400px">
+            </div>
+        {% endif %}
         
     </div>
+    </div>
+    
+<div class="scattering row g-2 overflow-hidden flex-md-row mb-2 h-md-250 position-relative">
+    <a href ="javascript:void(0);" id="noscroll">
+        <!-- <b>{{ amount_like }}</b> -->
+    </a>    
 </div>
+
+<div class="row g-2 overflow-hidden flex-md-row mb-2 h-md-250 position-relative">
+    <a href="/posts/{{ notice.id }}/{{ id_shoper }}/favourite" id="noscroll" onclick="change();">
+        <img src="{{ url_for('static', filename ='img/star_0.png' ) }}" alt="Star" width="50" height="50">
+        <!-- <b>{{ amount_like }}</b> -->
+    </a> 
+</div>
+    
+        <!-- <div id="carousel" class="carousel slide d-inline-block" data-ride="carousel">
+            
+            {% set file_name_1 = 'uploads/'+notice.image_1st %}
+            {% set file_name_2 = 'uploads/'+notice.image_1st %}
+            {% set file_name_3 = 'uploads/'+notice.image_1st %}
+           Индикаторы
+
+            <ol class="carousel-indicators">
+                <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel" data-slide-to="1"></li>
+                <li data-target="#carousel" data-slide-to="2"></li>
+            </ol>
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="img-fluid" src="{{ url_for('static', filename = file_name_2 ) }}" width="1000" height="1000" alt="None">
+                </div>
+                <div class="carousel-item">
+                    <img class="img-fluid" src="{{ url_for('static', filename = file_name_1 ) }}" width="1000" height="1000" alt="None">
+                </div>
+                <div class="carousel-item">
+                    <img class="img-fluid" src="{{ url_for('static', filename = file_name_3 ) }}" width="1000" height="1000" alt="None">
+                </div>
+            </div>
+            Элементы управления
+            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+            </a>
+            
+            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+            </a>
+        </div> -->
+
+       
+</div>
+
+
+<!-- /posts/{{ notice.id }}/{{ id_shoper }}/like -->
+
+<!-- <div class="row g-2 overflow-hidden flex-md-row mb-4 h-md-250 position-relative">
+    <div class="checkbox">
+        <input type="checkbox" id="click">
+        <label for="click" class="text"> Чекбокс </label>
+      </div>
+           
+</div> -->
+
+<div class="row g-2 overflow-hidden flex-md-row mb-4 h-md-250 position-relative">
+    
+</div>
+
+<script src="{{ url_for('static', filename='scripts/change.js') }}"></script>
+
+<script src="{{ url_for('static', filename='scripts/unload.js') }}"></script>
+
 <script src="{{ url_for('static', filename='scripts/none_pattern.js') }}"></script>
+
+<!-- jQuery -->
+<script src="/examples/vendors/jquery/jquery-3.3.1.min.js"></script>
+<!-- Popper -->
+<script src="/examples/vendors/popper.js/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/examples/vendors/bootstrap-4.1/js/bootstrap.min.js"></script>
 
 {% endblock %}
