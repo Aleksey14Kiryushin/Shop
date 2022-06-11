@@ -4,7 +4,6 @@
 
 {% block body %}
 <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
 <div class="container">
     <hr>
@@ -15,7 +14,7 @@
             <p><b>Seller: </b>{{ notice.name_visiable }}</p>
             <p><b>Category: </b>{{ notice.intro }}</p>
             <p><b>About: </b>{{ notice.text }}</p>
-            <p><b>Cost: </b>{{ notice.price }}</p>
+            <p><b>Cost: </b>{{ notice.price }}₽</p>
 
             <a target="_blank"  href="{{ notice.url }}" class="link-dark"><b>Contact for discussion</b></a><br>
             <p><b>Date: </b>{{ notice.date.date() }}</p>
@@ -119,12 +118,11 @@
 <div class="row g-2 overflow-hidden flex-md-row mb-4 h-md-250 position-relative">
     
 </div>
+<script src="{{ url_for('static', filename='scripts/none_pattern.js') }}"></script>
 
 <script src="{{ url_for('static', filename='scripts/change.js') }}"></script>
 
 <script src="{{ url_for('static', filename='scripts/unload.js') }}"></script>
-
-<script src="{{ url_for('static', filename='scripts/none_pattern.js') }}"></script>
 
 <!-- jQuery -->
 <script src="/examples/vendors/jquery/jquery-3.3.1.min.js"></script>
@@ -132,5 +130,7 @@
 <script src="/examples/vendors/popper.js/popper.min.js"></script>
 <!-- Bootstrap JS -->
 <script src="/examples/vendors/bootstrap-4.1/js/bootstrap.min.js"></script>
+
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
 {% endblock %}

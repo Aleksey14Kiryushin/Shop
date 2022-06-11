@@ -15,7 +15,8 @@
 
 #  - отправлять посты из js на flask, потом ТОЛЬКО 3 поста добавлять к записи
 
-# 
+# возможность удалять из избранных
+# окно создания градиент кнопки https://active-vision.ru/icon/gradient/
 
 # https://habr.com/ru/post/485404/
 
@@ -31,6 +32,7 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 import imghdr
 import os
+from random import *
 
 app = Flask(__name__)
 
@@ -109,7 +111,7 @@ def validate_image(stream):
 def too_large(e):
     return "File is too large", 413
 
-@app.route('/download/<int:id>/<int:shoper_id>')
+@app.route('/download/<int:id>/<int:shoper_id>') 
 def downloading(id, shoper_id):
     global counter_image
     files = os.listdir(app.config['UPLOAD_PATH'])
@@ -144,7 +146,7 @@ def upload_files(id, shoper_id):
                 post.image_1st = filename
             elif counter_image == 1:
                 post.image_2nd = filename
-            else:
+            elif counter_image == 2:
                 post.image_3rd = filename 
 
             DB.session.commit()
@@ -176,7 +178,31 @@ def index(id_shoper):
     print("id_shoper", id_shoper)
     if id_shoper == -1:
         return redirect('/log_in/10')
-    return render_template("index.html", id_shoper=id_shoper)
+
+    # все посты
+    posts = ShopArticle.query.order_by().all()
+    the_best_post = None
+    random_post = None
+
+    if len(posts) >= 1:
+        status = "GOOD"
+        all_posts = list()
+        the_best_count = 0
+        for post in posts:
+            if post.to_favourite >= the_best_count:     
+                the_best_count = post.to_favourite
+                # лучший пост
+                the_best_post = post
+
+            all_posts.append(post)
+        # рандомный пост
+        random_post = choice(all_posts)
+
+        
+    else:
+        status = "BAD"
+
+    return render_template("index.html", status=status, id_shoper=id_shoper, the_best_post=the_best_post, random_post=random_post)
 
 @app.route("/about/<int:id_shoper>")
 def about(id_shoper):
@@ -219,15 +245,33 @@ def profile(id_shoper):
 @app.route("/log_in/<int:warning_log>", methods=["POST", "GET"])
 def logIn(warning_log):
     if request.method == "POST":
+        shoper = False
+
         name = request.form["name"]
         password = request.form["password"]
 
-        shoper = Shoper(name=name, password=password, 
-                        like_posts='')
+        shopers = Shoper.query.order_by().all()
+        
+        # по всей бд ищем пользователя с такими данными
+        for shop in shopers:
+            print(f"{shop.name} - {name}")
+            print(f"{shop.password} - {password}")
+            if shop.name.lower() == name.lower() and shop.password.lower() == password.lower():
+                shoper = shop
+                print("Shoper Was Found", shoper.id_shoper)
+
+        if not shoper:
+            shoper = Shoper(name=name, password=password, 
+                            like_posts='')
+            try:
+                DB.session.add(shoper) 
+                DB.session.commit()
+                print("CREATE shoper:", shoper.id_shoper)
+            except:
+                print("WARNING Account")
         
         try:
-            DB.session.add(shoper)
-            DB.session.commit()
+
             print("Shoper_ID",shoper.id_shoper)
             if warning_log == 1:
                 return redirect(f'/create-notice/{shoper.id_shoper}/1')
@@ -484,6 +528,42 @@ def like(id, id_shoper):
     # posts = ShopArticle.query.order_by(ShopArticle.date.desc()).all()
 
     return render_template("post_detail.html", notice=post, id_shoper=id_shoper)
+
+@app.route("/posts/<int:id>/<int:id_shoper>/del_favourite")
+def delete_favourite(id, id_shoper):
+    try:
+        shoper = Shoper.query.get_or_404(id_shoper)
+    except:
+        return redirect('/log_in/10')
+
+    try:
+        shoper_liked_posts = shoper.like_posts.split()
+        print("shoper_liked_posts 0", shoper_liked_posts)
+        for post in shoper_liked_posts:
+            print(post)
+            if post == str(id):
+                print("POST Deleted", post)
+                shoper_liked_posts.remove(post)
+                print("shoper_liked_posts1",shoper_liked_posts)
+                break
+        print("shoper_liked_posts 11",shoper_liked_posts)
+
+        like_posts = ''
+        if len(shoper_liked_posts) >= 1:
+            for shop in shoper_liked_posts:
+                print("post", shop)
+                like_posts += f' {shop}'
+            shoper.like_posts = like_posts
+        else:
+            shoper.like_posts = ''
+
+        DB.session.commit()
+        print("shoper_liked_posts2",shoper.like_posts)
+        print("ID_DELETED", id)
+        return redirect(f'/{id_shoper}')
+
+    except Exception as _ex:
+        return str(_ex)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -17,7 +17,7 @@
                 <p><b>Price:</b> {{ el.price }}₽</p>
                 <p><b>Date:</b> {{ el.date.date() }}</p>
                 <!-- <p><b>IMG:</b> upload/{{ el.image_1st }}</p> -->
-                <a href="/posts/{{ el.id }}/{{ id_shoper }}" class="btn btn-warning">More</a>
+                <a href="/posts/{{ el.id }}/{{ id_shoper }}" class="btn btn-warning more-info">More</a>
                 <hr>
             </div>
             <div class="alert alert-info post col-auto d-none d-lg-block">
@@ -55,6 +55,8 @@
 <script src="{{ url_for('static', filename='scripts/none_pattern.js') }}"></script>
 
 <script src="{{ url_for('static', filename='scripts/change.js') }}"></script>
+
+<!-- <script src="{{ url_for('static', filename='scripts/btn_more_info_gradient.js') }}"></script> -->
 
 </div>
 {% endblock %}

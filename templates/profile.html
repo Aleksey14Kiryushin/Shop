@@ -9,8 +9,8 @@
     <hr>
     {% if notices|length > 0 %}
         {% for el in notices %}
-        <div class="row g-2 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="alert alert-info col p-4 d-flex flex-column position-static">
+        <div class="row g-3 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="alert alert-info post col p-4 d-flex flex-column position-static">
                 <h2>Title: {{ el.title }}</h2>
                 <p><b>Name: {{ el.name_visiable }}</b></p>
                 <a href="{{ el.url }}" target="_blank" class="link-dark"><b>Contact</b></a><br>
@@ -19,11 +19,12 @@
                 <p><b>Price: {{ el.price }}₽ </b></p>
                 <p>Date: {{ el.date.date() }}</p>
                 
-                <a href="/posts/{{ el.id }}/delete/{{ id_shoper }}" class="btn btn-danger">Delete</a><br>
-                <a href="/posts/{{ el.id }}/edit/{{ id_shoper }}/0" class="btn btn-success">Edit</a>
+                <a href="/posts/{{ el.id }}/delete/{{ id_shoper }}" class="btn btn-danger ">Delete</a><br>
+                <a href="/posts/{{ el.id }}/edit/{{ id_shoper }}/0" class="btn btn-success btn-edit">Edit</a><br>
+                <a href="/posts/{{ el.id }}/{{ id_shoper }}" class="btn btn-success btn-go">Go to post</a>
             
             </div>
-            <div class="alert alert-info col-auto d-none d-lg-block">
+            <div class="alert alert-info post col-auto d-none d-lg-block">
                 {% if el.image_1st != '' %}    
                     {% set file_name = 'uploads/'+el.image_1st %}
                     <image src="{{ url_for('static', filename = file_name ) }}" alt="None" class="bd-placeholder-img image-div" width="400" height="400">
