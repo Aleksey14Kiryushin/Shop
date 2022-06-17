@@ -151,8 +151,9 @@ def upload_files(id, shoper_id):
 
             DB.session.commit()
 
-        except:
-            print("WARNING")
+        except Exception as _Ex:
+            print("WARNING IN DOWNLOADING")
+            print(_Ex)
 
         print("NOTICE", id)
         counter_image += 1

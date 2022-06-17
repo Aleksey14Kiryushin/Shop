@@ -265,7 +265,7 @@ html {
   margin: 30px;
   border-radius: 20px;
   width: 45%;
-  height: 400px;
+  
   margin-right: 10px;
   margin-left: 10px;
   /* background: rgb(175, 33, 197); */
@@ -278,7 +278,8 @@ html {
   display: block;
   text-align: center;
   /* content: counter(gallery-cell); */
-  line-height: 400px;
+  
+
   font-size: 80px;
   color: white;
 }
@@ -286,6 +287,8 @@ html {
 .wrapper-image {
   border-radius: 20px;
   border: 5px solid rgb(255, 255, 255);
+  width: 97%;
+  height: 10%;
 }
 
 .btn-danger {

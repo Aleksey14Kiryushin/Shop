@@ -5,7 +5,7 @@
 {% block body %}
 <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
-<div class="container">
+<div class="container shadow-sm">
     <hr>
     <h1>{{ notice.title }}</h1>
     <br>
@@ -21,31 +21,31 @@
         </div>
 
         
-    <div class="gallery js-flickity"
+    <div class="gallery js-flickity container"
         data-flickity-options='{ "wrapAround": true }'>
         {% if notice.image_1st != '' %}
             {% set file_name = 'uploads/'+notice.image_1st %}
-            <div class="gallery-cell">
-                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" width="550px" height="400px">
+            <div class="gallery-cell item">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture">
             </div>
 
         {% else %}
-            <div class="gallery-cell">
-                <img src="{{ url_for('static', filename ='img/pict-empty.png' ) }}" alt="None" class="bd-placeholder-img image-div" width="550px" height="400px">
+            <div class="gallery-cell item">
+                <img src="{{ url_for('static', filename ='img/pict-empty.png' ) }}" alt="None" class="bd-placeholder-img image-div">
             </div>
         {% endif %}
 
         {% if notice.image_2nd != '' %}
             {% set file_name = 'uploads/'+notice.image_2nd %}
-            <div class="gallery-cell">
-                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" width="550px" height="400px">
+            <div class="gallery-cell item">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture">
             </div>
         {% endif %}
 
         {% if notice.image_3rd != '' %}
             {% set file_name = 'uploads/'+notice.image_3rd %}
-            <div class="gallery-cell">
-                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" width="550px" height="400px">
+            <div class="gallery-cell item">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture">
             </div>
         {% endif %}
         
