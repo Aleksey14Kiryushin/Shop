@@ -26,26 +26,26 @@
         {% if notice.image_1st != '' %}
             {% set file_name = 'uploads/'+notice.image_1st %}
             <div class="gallery-cell item">
-                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" loading="lazy">
             </div>
 
         {% else %}
             <div class="gallery-cell item">
-                <img src="{{ url_for('static', filename ='img/pict-empty.png' ) }}" alt="None" class="bd-placeholder-img image-div">
+                <img src="{{ url_for('static', filename ='img/pict-empty.png' ) }}" alt="None" class="bd-placeholder-img image-div" loading="lazy">
             </div>
         {% endif %}
 
         {% if notice.image_2nd != '' %}
             {% set file_name = 'uploads/'+notice.image_2nd %}
             <div class="gallery-cell item">
-                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" loading="lazy">
             </div>
         {% endif %}
 
         {% if notice.image_3rd != '' %}
             {% set file_name = 'uploads/'+notice.image_3rd %}
             <div class="gallery-cell item">
-                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture">
+                <img class="wrapper-image" src="{{ url_for('static', filename = file_name ) }}" alt="Picture" loading="lazy">
             </div>
         {% endif %}
         
@@ -60,7 +60,7 @@
 
 <div class="row g-2 overflow-hidden flex-md-row mb-2 h-md-250 position-relative">
     <a href="/posts/{{ notice.id }}/{{ id_shoper }}/favourite" id="noscroll" onclick="change();">
-        <img src="{{ url_for('static', filename ='img/star_0.png' ) }}" alt="Star" width="50" height="50">
+        <img src="{{ url_for('static', filename ='img/star_0.png' ) }}" alt="Star" width="50" height="50" loading="lazy">
         <!-- <b>{{ amount_like }}</b> -->
     </a> 
 </div>

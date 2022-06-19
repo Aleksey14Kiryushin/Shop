@@ -24,9 +24,9 @@
                 <!-- <p>IMG{{ 'uploads/'+el.image_1st }} </p> -->
                 {% set file_name = 'uploads/'+el.image_1st %}
                 {% if el.image_1st != '' %}    
-                    <image src="{{ url_for('static', filename = file_name ) }}" alt="None" class="bd-placeholder-img image-div" width="400" height="400">
+                    <img src="{{ url_for('static', filename = file_name ) }}" alt="None" class="bd-placeholder-img image-div" width="400" height="400" loading="lazy">
                 {% else %}
-                    <img src="{{ url_for('static', filename ='img/pict-empty.png' ) }}" alt="None" class="bd-placeholder-img image-div" width="400" height="400">
+                    <img src="{{ url_for('static', filename ='img/pict-empty.png' ) }}" alt="None" class="bd-placeholder-img image-div" width="400" height="400" loading="lazy">
                 {% endif %}
             </div>
         </div> 
