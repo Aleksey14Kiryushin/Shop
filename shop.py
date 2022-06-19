@@ -77,6 +77,10 @@ class ShopArticle(DB.Model):
     image_2nd = DB.Column(DB.Text)
     image_3rd = DB.Column(DB.Text)
 
+    first_color = DB.Column(DB.Text)
+    second_color = DB.Column(DB.Text)
+    third_color = DB.Column(DB.Text)
+
     def __repr__(self):
         return '<Article %r>' % self.id
 
@@ -397,7 +401,8 @@ def createNotice(id_shoper, warning_log):
                                     name_invisiable=shoper_name, 
                                     name_visiable=name, url=url,
                                     price=price, image_1st='',
-                                    image_2nd='', image_3rd='', to_favourite=0) 
+                                    image_2nd='', image_3rd='', to_favourite=0,
+                                    first_color='', second_color='', third_color='') 
             try:
                 DB.session.add(notice)
                 DB.session.commit()
@@ -565,6 +570,42 @@ def delete_favourite(id, id_shoper):
 
     except Exception as _ex:
         return str(_ex)
+
+
+@app.route("/btn_create/<int:id>/<int:id_shoper>", methods=["POST", "GET"])
+def creating_btn(id, id_shoper):
+    global colors
+
+    first_color = ''
+    second_color = ''
+    third_color = ''
+
+    if request.method == "POST":
+        first_color = request.form['1st_color']
+        second_color = request.form['2nd_color']
+        third_color = request.form['3rd_color']
+
+        colors = (first_color, second_color, third_color)
+
+        for i in range(len(colors)):
+            print(f"{i+1}-й color is", colors[i])
+
+        try:
+            post = ShopArticle.query.get_or_404(id)
+            post.first_color = colors[0]
+            post.second_color = colors[1]
+            post.third_color = colors[2]
+
+            DB.session.commit()
+
+        except Exception as _Ex:
+            print("Warning in choose_color\n", _Ex)
+            return redirect('/log_in/10')
+
+        print("HERE")
+
+    return render_template("choose_color.html", first_color=first_color, second_color=second_color, third_color=third_color, id_shoper=id_shoper, id=id)    
+
 
 if __name__ == "__main__":
     app.run(debug=True)

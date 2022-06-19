@@ -10,17 +10,17 @@
     {% if notices|length > 0 %}
         {% for el in notices %}
         <div class="row g-3 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="alert alert-info post col p-4 d-flex flex-column position-static">
+            <div class="alert alert-info post col p-4 d-flex flex-column position-static" style="border: 2px solid {{el.second_color}};">
                 <h2>Title: <b>{{ el.title }}</b></h2>
                 <p><b>Category:</b> {{ el.intro }}</p>
                 <p><b>Seller:</b> {{ el.name_visiable }}</p>
                 <p><b>Price:</b> {{ el.price }}₽</p>
                 <p><b>Date:</b> {{ el.date.date() }}</p>
                 <!-- <p><b>IMG:</b> upload/{{ el.image_1st }}</p> -->
-                <a href="/posts/{{ el.id }}/{{ id_shoper }}" class="btn btn-warning more-info">More</a>
+                <a href="/posts/{{ el.id }}/{{ id_shoper }}" class="btn shadow-sm btn-warning more-info" style="background-image: linear-gradient(60deg, {{el.first_color}} 10%, {{el.second_color}} 50%, {{el.third_color}} 100%); border: 1px solid white;">More</a>
                 <hr>
             </div>
-            <div class="alert alert-info post col-auto d-none d-lg-block">
+            <div class="alert alert-info post col-auto d-none d-lg-block" style="border: 2px solid {{el.second_color}};">
                 <!-- <p>IMG{{ 'uploads/'+el.image_1st }} </p> -->
                 {% set file_name = 'uploads/'+el.image_1st %}
                 {% if el.image_1st != '' %}    

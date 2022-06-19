@@ -5,12 +5,12 @@
 {% block body %}
 <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
-<div class="container shadow-sm">
+<div class="container shadow-sm" >
     <hr>
     <h1>{{ notice.title }}</h1>
     <br>
     <div class="row g-2 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="alert alert-info post col p-4 d-flex flex-column position-static">
+        <div class="alert alert-info post col p-4 d-flex flex-column position-static" style="border: 2px solid {{notice.first_color}};">
             <p><b>Seller: </b>{{ notice.name_visiable }}</p>
             <p><b>Category: </b>{{ notice.intro }}</p>
             <p><b>About: </b>{{ notice.text }}</p>
@@ -22,7 +22,7 @@
 
         
     <div class="gallery js-flickity container"
-        data-flickity-options='{ "wrapAround": true }'>
+        data-flickity-options='{ "wrapAround": true }'  style="border: 3px solid {{notice.third_color}}">
         {% if notice.image_1st != '' %}
             {% set file_name = 'uploads/'+notice.image_1st %}
             <div class="gallery-cell item">

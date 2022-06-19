@@ -10,7 +10,7 @@
     {% if notices|length > 0 %}
         {% for el in notices %}
         <div class="row g-3 border  rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="alert alert-info post col p-4 d-flex flex-column position-static">
+            <div class="alert alert-info post col p-4 d-flex flex-column position-static" style="border: 2px solid {{el.first_color}};">
                 <h2>Title: {{ el.title }}</h2>
                 <p><b>Name: {{ el.name_visiable }}</b></p>
                 <a href="{{ el.url }}" target="_blank" class="link-dark"><b>Contact</b></a><br>
@@ -18,12 +18,12 @@
                 <p>Short Text: {{ el.intro }}</p>
                 <p><b>Price: {{ el.price }}₽ </b></p>
                 <p>Date: {{ el.date.date() }}</p>
-                <a href="/posts/{{ el.id }}/{{ id_shoper }}" class="btn btn-go">More</a><br>
+                <a href="/posts/{{ el.id }}/{{ id_shoper }}" class="btn btn-go" style="background-image: linear-gradient(60deg, {{el.second_color}} 10%, {{el.third_color}} 50%, {{el.first_color}} 100%); border: 1px solid white;">More</a><br>
                 <a href="/posts/{{ el.id }}/{{ id_shoper }}/del_favourite" class="btn btn-danger">Delete from favourite</a>
                 <hr>
                 
             </div>
-            <div class="alert alert-info post col-auto d-none d-lg-block">                
+            <div class="alert alert-info post col-auto d-none d-lg-block" style="border: 2px solid {{el.first_color}};">                
                 {% if el.image_1st != '' %}  
                 {% set file_name = 'uploads/'+el.image_1st %}
   
